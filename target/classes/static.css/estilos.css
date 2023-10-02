@@ -1,0 +1,21 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Sep 21, 2023, 8:56:22 PM
+    Author     : perezer
+*/
+
+/*Estilo para el Home */
+
+body {
+    font-family: sans-serif;
+    padding: 80px 20px 0;
+    background-color: bisque;
+}
+h1{
+    text-align: center; 
+    background-color: black;
+    color: white;
+}
