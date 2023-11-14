@@ -1,4 +1,3 @@
-
 package com.tienda.service.impl;
 
 import com.tienda.dao.CategoriaDao;
@@ -7,19 +6,39 @@ import com.tienda.service.CategoriaService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class CategoriaServiceImpl implements CategoriaService{
-    
-    @Autowired//crear un unico objeto mientras se ejecuta la app, solo crea una lista
+public class CategoriaServiceImpl implements CategoriaService {
+
+    @Autowired
     private CategoriaDao categoriaDao;
+
     @Override
-    public List<Categoria> getCategorias(boolean activos){
-        var lista=categoriaDao.findAll();//encontrar todos los datos que tenga la lista
+    @Transactional(readOnly = true)//este va a ser un metodo que tengamos para hacer cosas transaccionales, por ejemplo, hacer consultas a la bd pero solo leer sin modificar nada
+    public List<Categoria> getCategorias(boolean activos) {
+        var lista = categoriaDao.findAll();
         if (activos) {
-            lista.removeIf(e-> !e.isActivo());//devuelve solo los que salen en activo, los demas los borra de la lista
+            lista.removeIf(e -> !e.isActivo());
         }
         return lista;
     }
-    
+
+    @Override
+    @Transactional(readOnly = true)
+    public Categoria getCategoria(Categoria categoria) {//buscar la categoria en la bd con el id que se tenga
+        return categoriaDao.findById(categoria.getIdCategoria()).orElse(null);
+    }
+
+    @Override
+    @Transactional
+    public void save(Categoria categoria) {//posiblemente una modificacion o insertar una nueva categoria
+        categoriaDao.save(categoria);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Categoria categoria) {/// borrar algo de la base de datos
+        categoriaDao.delete(categoria);
+    }
 }
